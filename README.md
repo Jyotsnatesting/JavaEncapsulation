@@ -13,6 +13,7 @@ Data Encapsulation:
 4. when we hide the (data)varaiables in a class, we can access that data using the class object when we write getters and setters.
 5. Getters and setters are the methods, Setters are used to write data to the variables and Getters are used to read the data from variables.
 
+
 ===============================================================
 In this code, i have written 2 Java classes about the simple Bank application.
 Used getters and Setters for data encapsulation.
