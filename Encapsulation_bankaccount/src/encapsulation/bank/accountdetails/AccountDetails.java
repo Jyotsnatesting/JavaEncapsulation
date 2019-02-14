@@ -1,6 +1,6 @@
 package encapsulation.bank.accountdetails;
 
-import java.util.InputMismatchException;
+//import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class AccountDetails {
@@ -8,10 +8,46 @@ public class AccountDetails {
 	private int AccountNumber;
 	private String CustomerName;
 	private int CurrentBalance;
-	private int WithdrawlAmount;
-	private int DepositAmount;
+	private String email;
+	private int phonenumber;
+	private int Amount;
 	private int Option;
 	
+	public int getAmount() {
+		return Amount;
+	}
+
+	public void setAmount(int amount) {
+		if(getOption() ==1) {
+		Amount = amount;
+		if(Amount>CurrentBalance) {
+		while (Amount>CurrentBalance) {
+			
+			System.out.println("Balance is not sufficient to with draw.");
+			System.out.println("Please enter the amount less than current balance: " +CurrentBalance );
+			System.out.println("Enter 0 to quit");
+			setAmount(user_input.nextInt());
+			if(Amount == 0) {
+				System.out.println("We are exiting the application, as per user input");
+				System.exit(0);
+			}
+				}
+		
+		}
+		else {
+			int balance = getCurrentBalance()-Amount;
+			setCurrentBalance(balance); 
+					}
+		}
+		else {
+			Amount = amount;
+			System.out.println("We are depositing the money to account." +Amount);
+			CurrentBalance = getCurrentBalance() + Amount;
+			setCurrentBalance(CurrentBalance);			
+			
+		}
+	
+	}
 	Scanner user_input = new Scanner(System.in);
 			
 	public int getOption() {
@@ -20,55 +56,20 @@ public class AccountDetails {
 
 	public void setOption(int option) {
 		Option = option;
-	}
-
-	public AccountDetails() {
-		
-		try {
-			System.out.println("Enter the Account Details:");
-			System.out.println("Enter the Account Number: ");
-			AccountNumber = user_input.nextInt();
-			setAccountNumber(AccountNumber);
-			System.out.println("Enter the CustomerName :");
-			CustomerName = user_input.next();
-			System.out.println("Enter the Current Balance :");
-			CurrentBalance = user_input.nextInt();
-			System.out.println("Enter the Option: ");
-			System.out.println("\t 0: Deposit");
-			System.out.println("\t 1: WithDrawl");
-			Option = user_input.nextInt();
-			while(Option == 0 && Option == 1) {
+		System.out.println("Option is " +getOption());
+			while(Option != 0 && Option != 1) {
 				
 				System.out.println("Please enter the valid option 0 or 1:");
 				System.out.println("\t 0: Deposit");
 				System.out.println("\t 1: WithDrawl");
-				Option = user_input.nextInt();
+				setOption(user_input.nextInt());;
 				
 			}
-			switch(Option) {
-			
-			case 0: System.out.println("Please enter Deposit Amount");
-					DepositAmount = user_input.nextInt();
-					System.out.println("We are depositing the money to account." +DepositAmount);
-					CurrentBalance = CurrentBalance + DepositAmount;
-					setCurrentBalance(CurrentBalance);
-					break;
-			case 1: System.out.println("Please enter Withdrawl Amount");
-					WithdrawlAmount = user_input.nextInt();
-					setWithdrawlAmount(WithdrawlAmount);
-					break;
-				
-			}
-		} catch (InputMismatchException e) {
-			// TODO Auto-generated catch block
-			System.out.println("The input type is mismatch");
-		}
-		
+	
 		
 	}
 	
 	
-
 	public int getAccountNumber() {
 		return AccountNumber;
 	}
@@ -107,40 +108,38 @@ public class AccountDetails {
 	public void setCurrentBalance(int currentBalance) {
 		CurrentBalance = currentBalance;
 	}
-	public int getWithdrawlAmount() {
-		return WithdrawlAmount;
+
+	public String getEmail() {
+		return email;
 	}
-	public void setWithdrawlAmount(int withdrawlAmount) {
-		WithdrawlAmount = withdrawlAmount;
-		if(WithdrawlAmount>CurrentBalance) {
-		while (WithdrawlAmount>CurrentBalance) {
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public int getPhonenumber() {
+		return phonenumber;
+	}
+
+	public void setPhonenumber(int phonenumber) {
+		this.phonenumber = phonenumber;
+		int temp = phonenumber;
+		int count = 0;
+		while(temp != 0) {
 			
-			System.out.println("Balance is not sufficient to with draw.");
-			System.out.println("Please enter the amount less than current balance: " +CurrentBalance );
-			System.out.println("Enter 0 to quit");
-			WithdrawlAmount = user_input.nextInt();
-			setWithdrawlAmount(WithdrawlAmount);
-			if(WithdrawlAmount == 0) {
-				System.out.println("We are exiting the application, as per user input");
-				System.exit(0);
+			temp = temp/10;
+			count ++;
+			
+		}
+		if(count >10 || count < 10) {
+			System.out.println("Please Enter a valid PHONE NUMBER: It should be 10 didgits or enter :0 to quit");
+			this.phonenumber = user_input.nextInt();
+			if(this.phonenumber == 0) {
+				System.out.println("Not a valid Account number and we are exiting the application");
+				System.exit(1);
 			}
-		}
-		
-		}
-		else {
-			int balance = getCurrentBalance()-WithdrawlAmount;
-			setCurrentBalance(balance); 
-			//System.out.println("The Amount is WITHDRAWN and the current balance is : " +getCurrentBalance());
+			setPhonenumber(this.phonenumber);
+			
 		}
 	}
-	public int getDepositAmount() {
-		return DepositAmount;
-	}
-	public void setDepositAmount(int depositAmount) {
-		DepositAmount = depositAmount;
-	}
-	
-	
-	
-	
 }
